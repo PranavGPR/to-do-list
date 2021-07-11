@@ -9,8 +9,17 @@ function App() {
     setInputText(item);
   }
 
+  const handlePress = (event) => {
+    if (event.key === "Enter" || event.keyCode === 13) {
+      setItems((prevItems) => {
+        return [...prevItems, inputText];
+      });
+      setInputText("");
+    }
+  };
+
   function buttonClick() {
-    setItems(prevItems => {
+    setItems((prevItems) => {
       return [...prevItems, inputText];
     });
     setInputText("");
@@ -22,15 +31,20 @@ function App() {
         <h1>To-Do List</h1>
       </div>
       <div className="form">
-        <input type="text" onChange={handleChange} value={inputText} />
+        <input
+          type="text"
+          onChange={handleChange}
+          value={inputText}
+          onKeyDown={handlePress}
+        />
         <button onClick={buttonClick}>
           <span>Add</span>
         </button>
       </div>
       <div>
         <ul>
-          {items.map(toDoItem => (
-            <li>{toDoItem}</li>
+          {items.map((toDoItem, index) => (
+            <li key={index}>{toDoItem}</li>
           ))}
         </ul>
       </div>
